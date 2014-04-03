@@ -20,5 +20,8 @@ function checkConnection()
     states[Connection.CELL_4G]  = 'Cell 4G connection';
     states[Connection.NONE]     = 'No network connection';
     alert('Connection type: ' + states[network]);
-	if (network == Connection.NONE) preventDefault();
+	if (network == Connection.NONE) {
+		preventDefault();
+		alert("Error: No connection available");
+	}
 }
