@@ -2,15 +2,153 @@
 <html lang="en-US">
 <head>
 <meta charset="UTF-8" />
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
-<script type="text/javascript" charset="utf-8" src="js/main.js"></script>
-<meta http-equiv="refresh" content="1;url=http://web.njit.edu/~mck7/IT302/ch18/html/" />
-<script type="text/javascript">
-	window.location.href = "http://web.njit.edu/~mck7/IT302/ch18/html/"
+
+<script type="text/javascript" charset="utf-8">
+
+//Wait for Cordova to connect with the device
+    document.addEventListener("deviceready",onDeviceReady,false);
+
+// Cordova is ready to be used!
+function onDeviceReady() {
+		startWatch();			//for compass
+}
+
+//Check connection type		
+function checkConnection() {
+    var networkState = navigator.connection.type;
+
+    var states = {};
+    states[Connection.UNKNOWN]  = 'Unknown connection';
+    states[Connection.ETHERNET] = 'Ethernet connection';
+    states[Connection.WIFI]     = 'WiFi connection';
+    states[Connection.CELL_2G]  = 'Cell 2G connection';
+    states[Connection.CELL_3G]  = 'Cell 3G connection';
+    states[Connection.CELL_4G]  = 'Cell 4G connection';
+    states[Connection.NONE]     = 'No network connection';
+
+    alert('Connection type: ' + states[networkState]);
+	if (network == Connection.NONE) {
+		preventDefault();
+		alert("Error: No connection available");
+	}
+}
+
+// Compass Code
+/*
+var options = { frequency: 3000 };  // Update every 3 seconds
+var watchID = navigator.compass.watchHeading(onSuccessCompass, onErrorCompass, options);
+navigator.compass.getCurrentHeading(onSuccessCompass, onErrorCompass);
+*/
+
+function onSuccessCompass(heading) {
+    var element = document.getElementById('heading');
+    element.innerHTML = 'Heading: ' + heading.magneticHeading;
+};
+function onErrorCompass(compassError) {
+        alert('Compass error: ' + compassError.code);
+};
+
+// Start watching the compass
+function startWatch() {
+        // Update compass every 2 seconds
+        var options = { frequency: 2000 };
+        watchID = navigator.compass.watchHeading(onSuccessCompass, onErrorCompass, options);
+}
+	
+// Stop watching the compass
+function stopWatch() {
+        if (watchID) {
+            navigator.compass.clearWatch(watchID);
+            watchID = null;
+        }
+}
+
+function createRequestObject()
+{   var ro;
+    var browser = navigator.appName;
+    if(browser == "Microsoft Internet Explorer")
+    {       ro = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else
+    {       ro = new XMLHttpRequest();
+    }
+    return ro;
+}
+var http = createRequestObject();
+function sndReq()
+{   u = document.getElementById(100).value
+    http.open('get'  , 'http://web.njit.edu/~mck7/IT302/ch18/html/ajaxDB1.php?v=' + u  +  "&junk="+Math.random());  //forces not from cache
+    http.onreadystatechange = handleResponse;
+    http.send(null);
+}
+
+function handleResponse()
+{   if(http.readyState == 4)
+    {   var response = http.responseText; 
+	//alert(response);
+        document.getElementById(200).innerHTML = response
+    }
+}
+
+$(document).ready( function(){
+
+$("#press").click(function (){  
+
+    get zipcode
+	
+	run ajax:
+    $.ajax({	
+	            type: 	"POST"  ,
+				url: 	"proxy here",
+				data: 	"name=value pairs for query string"	,		             //+ and &junk=+Math.random() 
+				beforeSend: function(){.... },                                   //SPINNERS: http://codepen.io/collection/HtAne
+													 
+				error:function(xhr, status, error) { xhr.status  ... error); },	 //TEST THIS WITH MISSING FILE 
+								
+					
+				success: function(result){
+				    
+					result=jQuery.parseJSON( result );    //IF OMTTED THIS DOES NOT DISPLAY CORRECTLY FROM HERE ON
+								
+					//FOLLOW json DOTTED NOTATION   ...   NOTE THAT:  curren_weather is an array!
+					//USE online JSON editor for view - can copy from tools network respone in chrome 
+					//watch out for extra characters like semi-colon at end of line
+					
+					$("#B").append ( "...." ) ; 
+					
+				    }
+		});   
+    });
+});
+
+
 </script>
-<title>Page Redirection</title>
+
+<title>IT302app</title>
 </head>
 <body>
-If you are not redirected automatically, touch <a href='http://web.njit.edu/~mck7/IT302/ch18/html/'>here</a>
+<button onclick= "location.href='http://web.njit.edu/~mck7/IT302/ch18/html/gateway.php'"> Ullman Project </button>	
+<br/><br/>
+
+<button onclick= "alert('Here I am');"> popup </button  >			<br/><br/>
+
+<button onclick= "checkConnection();"> check connection </button>	<br/><br/>	
+
+ENTER Letters <input type = text     id = 100  
+       onkeyup="sndReq()" /><br/>
+       
+<div id=200  class="B"></div><br/><br/>
+
+<div  id="heading">Heading for compass goes here.</div>				<br/><br/><br/><br/>
+
+<input type=button value="press" id="press"      /><br/><br/>
+
+<input type = text id = "zip" />zipcode for weather<br/><br/>
+
+<div  id="B"></div>
 </body>
 </html>
