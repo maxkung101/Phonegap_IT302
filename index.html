@@ -31,7 +31,7 @@ function checkConnection() {
     states[Connection.NONE]     = 'No network connection';
 
     alert('Connection type: ' + states[networkState]);
-	if (network == Connection.NONE) {
+	if (networkState == Connection.NONE) {
 		preventDefault();
 		alert("Error: No connection available");
 	}
