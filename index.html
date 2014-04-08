@@ -81,7 +81,7 @@ function createRequestObject()
 var http = createRequestObject();
 function sndReq()
 {   u = document.getElementById(100).value
-    http.open('get'  , 'http://web.njit.edu/~mck7/IT302/ch18/html/ajaxDB1.php?v=' + u  +  "&junk="+Math.random());  //forces not from cache
+    http.open('get'  , 'http://cs.njit.edu/mchugh/202/NOTES/Assignment04/Assignment_04_Background/AjaxDB1/AjaxDB1.php?v=' + u  +  "&junk="+Math.random());  //forces not from cache
     http.onreadystatechange = handleResponse;
     http.send(null);
 }
