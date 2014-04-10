@@ -1,10 +1,42 @@
 <!DOCTYPE HTML>
 <html lang="en-US">
 <head>
+<title>Index</title>
 <meta charset="UTF-8" />
+<style>
+    .spinner {
+      width: 30px;
+      height: 30px;
+      background-color: #333;
+
+      margin: 100px auto;
+      -webkit-animation: rotateplane 1.2s infinite ease-in-out;
+      animation: rotateplane 1.2s infinite ease-in-out;
+    }
+
+    @-webkit-keyframes rotateplane {
+      0% { -webkit-transform: perspective(120px) }
+      50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+      100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+    }
+
+    @keyframes rotateplane {
+      0% {
+        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+      } 50% {
+        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+      } 100% {
+        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+      }
+    }
+</style>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
+<script type="text/javascript" charset="utf-8" src="main.js"></script>
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
 <script type="text/javascript" charset="utf-8">
@@ -94,38 +126,6 @@ function handleResponse()
     }
 }
 
-$(document).ready( function(){
-
-$("#press").click(function (){  
-
-    get zipcode
-	
-	run ajax:
-    $.ajax({	
-	            type: 	"POST"  ,
-				url: 	"proxy here",
-				data: 	"name=value pairs for query string"	,		             //+ and &junk=+Math.random() 
-				beforeSend: function(){.... },                                   //SPINNERS: http://codepen.io/collection/HtAne
-													 
-				error:function(xhr, status, error) { xhr.status  ... error); },	 //TEST THIS WITH MISSING FILE 
-								
-					
-				success: function(result){
-				    
-					result=jQuery.parseJSON( result );    //IF OMTTED THIS DOES NOT DISPLAY CORRECTLY FROM HERE ON
-								
-					//FOLLOW json DOTTED NOTATION   ...   NOTE THAT:  curren_weather is an array!
-					//USE online JSON editor for view - can copy from tools network respone in chrome 
-					//watch out for extra characters like semi-colon at end of line
-					
-					$("#B").append ( "...." ) ; 
-					
-				    }
-		});   
-    });
-});
-
-
 </script>
 
 <title>IT302app</title>
@@ -141,7 +141,7 @@ $("#press").click(function (){
 ENTER Letters <input type = text     id = "100"  
        onkeyup="sndReq()" /><br/>
        
-<div id="200"  class="B"></div><br/><br/>
+<div id="200"  class="A"></div><br/><br/>
 
 <div  id="heading">Heading for compass goes here.</div>				<br/><br/><br/><br/>
 

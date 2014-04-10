@@ -1,0 +1,13 @@
+{
+  "name": "myweather2",
+  "version": "0.0.3",
+  "description": "Simple interface for the myWeather2 API",
+  "keywords": ["myWeather2", "forecast", "weather"],
+  "author": "Max Kung <mck7@njit.edu>",
+
+  "main": "./index",
+  "engines": { "node": ">= 0.8.0" },
+  "dependencies": {
+    "superagent": "0.7.0"
+  }
+}
