@@ -3,42 +3,39 @@
 <head>
 <title>Index</title>
 <meta charset="UTF-8" />
-<style>
-    .spinner {
-      width: 30px;
-      height: 30px;
-      background-color: #333;
-
-      margin: 100px auto;
-      -webkit-animation: rotateplane 1.2s infinite ease-in-out;
-      animation: rotateplane 1.2s infinite ease-in-out;
-    }
-
-    @-webkit-keyframes rotateplane {
-      0% { -webkit-transform: perspective(120px) }
-      50% { -webkit-transform: perspective(120px) rotateY(180deg) }
-      100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
-    }
-
-    @keyframes rotateplane {
-      0% {
-        transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-        -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
-      } 50% {
-        transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-        -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
-      } 100% {
-        transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-        -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
-      }
-    }
-</style>
 <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
 <script src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
 
 <script type="text/javascript" charset="utf-8" src="cordova.js"></script>
 
 <script type="text/javascript" charset="utf-8">
+
+function createRequestObject()
+{   var ro;
+    var browser = navigator.appName;
+    if(browser == "Microsoft Internet Explorer")
+    {       ro = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    else
+    {       ro = new XMLHttpRequest();
+    }
+    return ro;
+}var http = createRequestObject();
+
+function sndReq()
+{   u = document.getElementById("100").value
+    http.open('get'  , 'http://web.njit.edu/~mck7/202/ajaxDB1.php?v=' + u  +  "&junk="+Math.random());  //forces not from cache
+    http.onreadystatechange = handleResponse;
+    http.send(null);
+}
+
+function handleResponse()
+{   if(http.readyState == 4)
+    {   var response = http.responseText; 
+	//alert(response);
+        document.getElementById("200").innerHTML = response
+    }
+}
 
 //Wait for Cordova to connect with the device
     document.addEventListener("deviceready",onDeviceReady,false);
@@ -96,33 +93,6 @@ function stopWatch() {
             navigator.compass.clearWatch(watchID);
             watchID = null;
         }
-}
-
-function createRequestObject()
-{   var ro;
-    var browser = navigator.appName;
-    if(browser == "Microsoft Internet Explorer")
-    {       ro = new ActiveXObject("Microsoft.XMLHTTP");
-    }
-    else
-    {       ro = new XMLHttpRequest();
-    }
-    return ro;
-}var http = createRequestObject();
-
-function sndReq()
-{   u = document.getElementById("100").value
-    http.open('get'  , 'http://web.njit.edu/~mck7/202/ajaxDB1.php?v=' + u  +  "&junk="+Math.random());  //forces not from cache
-    http.onreadystatechange = handleResponse;
-    http.send(null);
-}
-
-function handleResponse()
-{   if(http.readyState == 4)
-    {   var response = http.responseText; 
-	//alert(response);
-        document.getElementById("200").innerHTML = response
-    }
 }
 
 </script>
