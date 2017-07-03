@@ -22,11 +22,11 @@
 			   the filename!		
 		-->
 		
-    <name>IT301 + Connection</name>
+    <name>IT302 + Connection</name>
 
     <!-- Define app icon for each platform. -->
     <icon src="icon.png" />
 
-	 <preference name="phonegap-version" value="3.3.0" />
+	 <preference name="phonegap-version" value="cli-6.5.0" />
 
 </widget>
